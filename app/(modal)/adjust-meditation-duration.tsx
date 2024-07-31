@@ -10,7 +10,9 @@ const AdjustMeditationDuration = () => {
   const { setDuration } = useContext(TimerContext);
 
   const handlePress = (duration: number) => {
+    setDuration(duration);
     router.back();
+    console.log("changed duration to " + Number(duration));
   };
 
   return (
