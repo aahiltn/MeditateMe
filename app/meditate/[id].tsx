@@ -39,9 +39,6 @@ const Meditate = () => {
 
   useEffect(() => {
     return () => {
-      if (!isMeditating) {
-        setDuration(10);
-      }
       audioSound?.unloadAsync();
     };
   }, [duration, isMeditating]);
@@ -51,8 +48,7 @@ const Meditate = () => {
       setDuration(10);
     }
     setMeditating(!isMeditating);
-
-    //await toggleSound();
+    await toggleSound();
   };
 
   const initializeSound = async () => {
@@ -60,6 +56,8 @@ const Meditate = () => {
     const audioFileName = MEDITATION_DATA[Number(id) - 1].audio;
     console.log(MEDITATION_DATA[Number(id) - 1].title);
     const { sound } = await Audio.Sound.createAsync(AUDIO_FILES[audioFileName]);
+
+    console.log(` Path: ${AUDIO_FILES[audioFileName]}`);
     setSound(sound);
     console.log("got sound");
     return sound;
@@ -68,15 +66,22 @@ const Meditate = () => {
   const toggleSound = async () => {
     const sound = audioSound ? audioSound : await initializeSound();
     const status = await sound?.getStatusAsync();
+    console.log("Loaded status " + status?.isLoaded);
 
     if (status?.isLoaded && !isPlayingAudio) {
-      await sound.playAsync();
       setPlayingAudio(true);
+      await sound.playAsync();
     } else {
-      console.log("Loaded status " + status?.isLoaded);
-      await sound.pauseAsync();
       setPlayingAudio(false);
+      await sound.pauseAsync();
     }
+
+    console.log("Playing audio" + isPlayingAudio);
+  };
+
+  const goBack = () => {
+    setDuration(10);
+    router.back();
   };
 
   // format time left to ensure two digits
@@ -100,10 +105,7 @@ const Meditate = () => {
         className="flex-1"
       >
         <AppGradient colors={["transparent", "rgba(0, 0, 0, 0.8)"]}>
-          <Pressable
-            onPress={() => router.back()}
-            className="absolute top-16 left-6 z-10"
-          >
+          <Pressable onPress={goBack} className="absolute top-16 left-6 z-10">
             <AntDesign name="leftcircleo" size={50} color="white" />
           </Pressable>
 

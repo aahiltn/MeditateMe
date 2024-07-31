@@ -1,7 +1,6 @@
 import { View, Text, ImageBackground } from "react-native";
 import React from "react";
 import beachImage from "@/assets/meditation-images/beach.webp";
-import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "@/components/CustomButton";
@@ -22,10 +21,10 @@ const App = () => {
           <SafeAreaView className="flex-1 mx-5 my-12 justify-between">
             <View>
               <Text className="text-center text-white font-bold text-4xl">
-                Simple Meditation
+                MeditateMe
               </Text>
               <Text className="text-center text-white text-regular text-2xl mt-3">
-                Simplifying Meditation for All
+                Mindfulness. Made easy.
               </Text>
             </View>
             <View>
